@@ -1,6 +1,10 @@
 defmodule AbsintheStatusCodePlug do
   import Plug.Conn
 
+  @moduledoc """
+  Plug that sets status code to 400 when response includes errors.
+  """
+
   def init(opts), do: opts
 
   def call(conn, _opts) do
