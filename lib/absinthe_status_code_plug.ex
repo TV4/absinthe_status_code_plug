@@ -12,7 +12,10 @@ defmodule AbsintheStatusCodePlug do
   end
 
   def fix_status_code(conn) do
-    fix_status_code(conn, Jason.decode!(conn.resp_body))
+    case Plug.Conn.get_resp_header(conn, "content-type") do
+      ["application/json" <> _] -> fix_status_code(conn, Jason.decode!(conn.resp_body))
+      _ -> conn
+    end
   end
 
   defp fix_status_code(conn, %{"errors" => _}) do

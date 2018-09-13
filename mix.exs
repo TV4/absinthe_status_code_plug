@@ -7,7 +7,8 @@ defmodule AbsintheStatusCodePlug.MixProject do
       version: "1.0.0",
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      preferred_cli_env: ["test.watch": :test]
     ]
   end
 
@@ -18,7 +19,8 @@ defmodule AbsintheStatusCodePlug.MixProject do
   defp deps do
     [
       {:plug, "~> 1.6"},
-      {:jason, "~> 1.1"}
+      {:jason, "~> 1.1"},
+      {:mix_test_watch, "~> 0.5", only: :test, runtime: false}
     ]
   end
 end
