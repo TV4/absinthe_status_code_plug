@@ -4,7 +4,7 @@ defmodule AbsintheStatusCodePlug.MixProject do
   def project do
     [
       app: :absinthe_status_code_plug,
-      version: "1.0.0",
+      version: "1.1.0",
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
