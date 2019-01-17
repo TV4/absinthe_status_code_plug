@@ -5,7 +5,7 @@ defmodule AbsintheStatusCodePlug do
   Plug that sets status code to 400 when response includes errors.
   """
 
-  def init(opts), do: Keyword.get(opts, :paths)
+  def init(opts), do: Keyword.get(opts, :paths, [])
 
   def call(conn, opts_paths) do
     register_before_send(conn, &fix_status_code(&1, opts_paths))

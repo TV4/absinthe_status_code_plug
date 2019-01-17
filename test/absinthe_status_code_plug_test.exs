@@ -6,7 +6,7 @@ defmodule AbsintheStatusCodePlugTest do
     test "override status code to 400 when the body contains an error" do
       conn =
         conn(:get, "/")
-        |> AbsintheStatusCodePlug.call([])
+        |> AbsintheStatusCodePlug.call(AbsintheStatusCodePlug.init([]))
         |> put_resp_header("content-type", "application/json")
         |> send_resp(200, Jason.encode!(%{errors: []}))
 
@@ -16,7 +16,7 @@ defmodule AbsintheStatusCodePlugTest do
     test "keep the status code when the body does not contain an error" do
       conn =
         conn(:get, "/")
-        |> AbsintheStatusCodePlug.call([])
+        |> AbsintheStatusCodePlug.call(AbsintheStatusCodePlug.init([]))
         |> put_resp_header("content-type", "application/json")
         |> send_resp(200, Jason.encode!(%{}))
 
@@ -28,7 +28,7 @@ defmodule AbsintheStatusCodePlugTest do
     test "override status code to 400 when the body contains an error and the path is included" do
       conn =
         conn(:get, "/")
-        |> AbsintheStatusCodePlug.call(["login"])
+        |> AbsintheStatusCodePlug.call(AbsintheStatusCodePlug.init(paths: ["login"]))
         |> put_resp_header("content-type", "application/json")
         |> send_resp(200, Jason.encode!(%{errors: [%{"path" => ["login"]}]}))
 
@@ -38,7 +38,7 @@ defmodule AbsintheStatusCodePlugTest do
     test "keep the status code when the body does not contain an error and the path is excluded" do
       conn =
         conn(:get, "/")
-        |> AbsintheStatusCodePlug.call(["something"])
+        |> AbsintheStatusCodePlug.call(AbsintheStatusCodePlug.init(paths: ["something"]))
         |> put_resp_header("content-type", "application/json")
         |> send_resp(200, Jason.encode!(%{errors: [%{"path" => ["login"]}]}))
 
@@ -49,7 +49,7 @@ defmodule AbsintheStatusCodePlugTest do
   test "keep the status code when the response is not json" do
     conn =
       conn(:get, "/")
-      |> AbsintheStatusCodePlug.call([])
+      |> AbsintheStatusCodePlug.call(AbsintheStatusCodePlug.init([]))
       |> put_resp_header("content-type", "application/html")
       |> send_resp(200, "totally html")
 
